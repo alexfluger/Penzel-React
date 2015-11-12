@@ -1,0 +1,21 @@
+{
+  "name": "ReactTest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc -p app -w",
+    "start": "live-server --open=app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^0.8.1",
+    "typescript": "^1.8.0-dev.20151112"
+  },
+  "dependencies": {
+    "systemjs": "0.19.2",
+    "react": "^0.14.2"
+  }
+}
