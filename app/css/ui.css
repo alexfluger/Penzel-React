@@ -1,0 +1,141 @@
+* {
+  overflow: hidden; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  height: 100%;
+  min-width: 100%;
+  width: 100%;
+  font-size: 18px;
+  display: -webkit-box;
+  display: flex; }
+
+/*
+* ScrollView
+*/
+ScrollView {
+  display: block;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch; }
+
+/*
+* LinearLayout
+*/
+linearLayout {
+  display: -webkit-box;
+  display: flex; }
+  linearLayout[ui\:orientation=horizontal] {
+    -webkit-box-orient: horizontal;
+    flex-direction: row; }
+  linearLayout[ui\:orientation=vertical] {
+    -webkit-box-orient: vertical;
+    flex-direction: column; }
+  linearLayout[ui\:align=start] {
+    align-items: flex-start; }
+  linearLayout[ui\:align=end] {
+    align-items: flex-end; }
+  linearLayout[ui\:align=center] {
+    align-items: center; }
+  linearLayout[ui\:align=baseline] {
+    align-items: baseline; }
+  linearLayout[ui\:align=stretch] {
+    align-items: stretch; }
+  linearLayout[ui\:justify=start] {
+    justify-content: flex-start; }
+  linearLayout[ui\:justify=end] {
+    justify-content: flex-end; }
+  linearLayout[ui\:justify=center] {
+    justify-content: center; }
+  linearLayout[ui\:justify=space-between] {
+    justify-content: space-between; }
+  linearLayout[ui\:justify=space-around] {
+    justify-content: space-around; }
+
+[ui\:flex="1"] {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  flex-basis: 0; }
+
+[ui\:flex="2"] {
+  -webkit-box-flex: 2;
+  flex-grow: 2;
+  flex-basis: 0; }
+
+[ui\:flex="3"] {
+  -webkit-box-flex: 3;
+  flex-grow: 3;
+  flex-basis: 0; }
+
+[ui\:flex="4"] {
+  -webkit-box-flex: 4;
+  flex-grow: 4;
+  flex-basis: 0; }
+
+[ui\:flex="5"] {
+  -webkit-box-flex: 5;
+  flex-grow: 5;
+  flex-basis: 0; }
+
+[ui\:flex="6"] {
+  -webkit-box-flex: 6;
+  flex-grow: 6;
+  flex-basis: 0; }
+
+[ui\:flex="7"] {
+  -webkit-box-flex: 7;
+  flex-grow: 7;
+  flex-basis: 0; }
+
+[ui\:flex="8"] {
+  -webkit-box-flex: 8;
+  flex-grow: 8;
+  flex-basis: 0; }
+
+[ui\:flex="9"] {
+  -webkit-box-flex: 9;
+  flex-grow: 9;
+  flex-basis: 0; }
+
+[ui\:flex="10"] {
+  -webkit-box-flex: 10;
+  flex-grow: 10;
+  flex-basis: 0; }
+
+[ui\:flex="11"] {
+  -webkit-box-flex: 11;
+  flex-grow: 11;
+  flex-basis: 0; }
+
+[ui\:flex="12"] {
+  -webkit-box-flex: 12;
+  flex-grow: 12;
+  flex-basis: 0; }
+
+[ui\:flex] {
+  -webkit-box-flex: attr(ui\:flex);
+  flex-grow: attr(ui\:flex);
+  flex-basis: 0; }
+
+/* fix growing for old flexbox */
+[ui\:orientation="horizontal"] > [ui\:flex] {
+  width: 0;
+  height: 100%; }
+
+[ui\:orientation="vertical"] > [ui\:flex] {
+  height: 0;
+  width: 100%; }
+
+/*
+* AbsoluteLayout
+*/
+AbsoluteLayout {
+  display: block;
+  position: relative; }
+  AbsoluteLayout > * {
+    position: absolute;
+    top: attr(ui\:top);
+    left: attr(ui\:left);
+    bottom: attr(ui\:bottom);
+    right: attr(ui\:right); }
