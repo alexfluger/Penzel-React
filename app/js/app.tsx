@@ -56,7 +56,9 @@ class App extends React.Component<AppParams, AppState> {
 					onToolChanged={this.onActiveToolChanged.bind(this)} 
 				/>
 				<Drawing
-					activeTool={this.state.activeTool} 
+					activeTool={this.state.activeTool}
+					layers={this.state.layers} 
+					activeLayer={this.state.activeLayer}
 				/>
 				<Layers 
 					layers={this.state.layers}

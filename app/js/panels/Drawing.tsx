@@ -1,9 +1,12 @@
 /// <reference path="../../../typings/react/react.d.ts" />
 import * as React from "react";
 import {Tool} from "../tools/Tool";
+import {Layer} from "../Layer";
 
 class DrawingParams {
 	activeTool: Tool;
+	layers: Layer[]
+	activeLayer: Layer;
 }
 
 class DrawingState { }
@@ -14,6 +17,7 @@ export class Drawing extends React.Component<DrawingParams, DrawingState> {
 	mid_canvas;
 	front_canvas;
 	canvasCtx: CanvasRenderingContext2D;
+	drawnLayerIdx: number = -1;
 	
 	componentDidMount() {
 		var w = this.container.clientWidth;
@@ -27,39 +31,46 @@ export class Drawing extends React.Component<DrawingParams, DrawingState> {
 		this.front_canvas.height = h;
 		
 		this.canvasCtx = this.mid_canvas.getContext('2d');
+		
+		this.redraw();
+	}
+	
+	componentDidUpdate() {
+		this.redraw();
+	}
+	
+	getImageData() {
+		return this.mid_canvas.toDataURL();
 	}
 	
 	redraw() {
 		// if we have layer drawn, store image data to that layer
 		if (this.drawnLayerIdx > -1) {
-			this.layers[this.drawnLayerIdx].setImageData(this.getImageData());
+			this.props.layers[this.drawnLayerIdx].setImageData(this.getImageData());
 		} 
 		// clear back canvas
-		this._backCanvas.getContext('2d').clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this._backCanvas.getContext('2d').globalCompositeOperation = 'source-over';
-		// put previous layers on back canvas
-		for (var i = 0; i < this.currentLayerIdx; i++) {
-			if (this.layers[i].visible) this.layers[i].draw(this._backCanvas.getContext('2d'));
-		}
+		this.back_canvas.getContext('2d').clearRect(0, 0, this.back_canvas.width, this.back_canvas.height);
+		this.back_canvas.getContext('2d').globalCompositeOperation = 'source-over';
 		// clear working canvas
-		this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.canvasCtx.clearRect(0, 0, this.mid_canvas.width, this.mid_canvas.height);
 		this.canvasCtx.globalCompositeOperation = 'source-over';
-		// put current layer on working canvas
-		if (this.layers[this.currentLayerIdx].visible) {
-			// store index of drawn layer
-			this.drawnLayerIdx = this.currentLayerIdx;
-			// draw layer
-			this.layers[this.currentLayerIdx].draw(this.canvasCtx);
-		} else {
-			// no layer drawn, so clear drawn layer index
-			this.drawnLayerIdx = -1; 
-		}
 		// clear front canvas
-		this._frontCanvas.getContext('2d').clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this._frontCanvas.getContext('2d').globalCompositeOperation = 'source-over';
-		// put next layers on front canvas
-		for (var i = this.currentLayerIdx + 1; i < this.layers.length; i++) {
-			if (this.layers[i].visible) this.layers[i].draw(this._frontCanvas.getContext('2d'));
+		this.front_canvas.getContext('2d').clearRect(0, 0, this.front_canvas.width, this.front_canvas.height);
+		this.front_canvas.getContext('2d').globalCompositeOperation = 'source-over';
+		// put layers on canvases
+		var currentCanvas = this.back_canvas;
+		for (var i = 0; i < this.props.layers.length; i++) {
+			if (this.props.layers[i] == this.props.activeLayer) {
+				if (this.props.layers[i].visible) {
+					this.drawnLayerIdx = i;
+					this.props.layers[i].draw(this.mid_canvas.getContext('2d'));
+				} else {
+					this.drawnLayerIdx = -1;
+				}
+				currentCanvas = this.front_canvas;
+			} else if (this.props.layers[i].visible) {
+				this.props.layers[i].draw(currentCanvas.getContext('2d'));
+			}
 		}
 	}
 	
