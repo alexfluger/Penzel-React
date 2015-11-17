@@ -15,42 +15,42 @@ html, body {
 /*
 * ScrollView
 */
-x-ScrollView {
+x-scrollview {
   display: block;
   overflow: scroll;
   -webkit-overflow-scrolling: touch; }
 
 /*
-* LinearLayout
+* Linearlayout
 */
-x-LinearLayout {
+x-linearlayout {
   display: -webkit-box;
   display: flex; }
-  linearLayout[ui-orientation=horizontal] {
+  x-linearlayout[ui-orientation=horizontal] {
     -webkit-box-orient: horizontal;
     flex-direction: row; }
-  linearLayout[ui-orientation=vertical] {
+  x-linearlayout[ui-orientation=vertical] {
     -webkit-box-orient: vertical;
     flex-direction: column; }
-  linearLayout[ui-align=start] {
+  x-linearlayout[ui-align=start] {
     align-items: flex-start; }
-  linearLayout[ui-align=end] {
+  x-linearlayout[ui-align=end] {
     align-items: flex-end; }
-  linearLayout[ui-align=center] {
+  x-linearlayout[ui-align=center] {
     align-items: center; }
-  linearLayout[ui-align=baseline] {
+  x-linearlayout[ui-align=baseline] {
     align-items: baseline; }
-  linearLayout[ui-align=stretch] {
+  x-linearlayout[ui-align=stretch] {
     align-items: stretch; }
-  linearLayout[ui-justify=start] {
+  x-linearlayout[ui-justify=start] {
     justify-content: flex-start; }
-  linearLayout[ui-justify=end] {
+  x-linearlayout[ui-justify=end] {
     justify-content: flex-end; }
-  linearLayout[ui-justify=center] {
+  x-linearlayout[ui-justify=center] {
     justify-content: center; }
-  linearLayout[ui-justify=space-between] {
+  x-linearlayout[ui-justify=space-between] {
     justify-content: space-between; }
-  linearLayout[ui-justify=space-around] {
+  x-linearlayout[ui-justify=space-around] {
     justify-content: space-around; }
 
 [ui-flex="1"] {
@@ -130,10 +130,10 @@ x-LinearLayout {
 /*
 * AbsoluteLayout
 */
-x-AbsoluteLayout {
+x-absolutelayout {
   display: block;
   position: relative; }
-  x-AbsoluteLayout > * {
+  x-absolutelayout > * {
     position: absolute;
     top: attr(ui-top);
     left: attr(ui-left);
