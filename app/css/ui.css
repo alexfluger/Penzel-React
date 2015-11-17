@@ -15,7 +15,7 @@ html, body {
 /*
 * ScrollView
 */
-ScrollView {
+x-ScrollView {
   display: block;
   overflow: scroll;
   -webkit-overflow-scrolling: touch; }
@@ -23,7 +23,7 @@ ScrollView {
 /*
 * LinearLayout
 */
-linearLayout {
+x-LinearLayout {
   display: -webkit-box;
   display: flex; }
   linearLayout[ui\:orientation=horizontal] {
@@ -130,10 +130,10 @@ linearLayout {
 /*
 * AbsoluteLayout
 */
-AbsoluteLayout {
+x-AbsoluteLayout {
   display: block;
   position: relative; }
-  AbsoluteLayout > * {
+  x-AbsoluteLayout > * {
     position: absolute;
     top: attr(ui\:top);
     left: attr(ui\:left);
