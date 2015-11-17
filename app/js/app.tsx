@@ -25,7 +25,8 @@ class App extends React.Component<AppParams, AppState> {
 			new Eraser()
 		]
 		var layers = [
-			new Layer('Layer 1', new Image)
+			new Layer('Layer 1', new Image),
+			new Layer('Layer 2', new Image)
 		]
 		this.state = {
 			layers: layers,
@@ -35,8 +36,13 @@ class App extends React.Component<AppParams, AppState> {
 		}
 	}
 	
-	onToolChanged(tool: Tool) {
+	onActiveToolChanged(tool: Tool) {
 		this.state.activeTool =  tool;
+		this.forceUpdate();
+	}
+	
+	onActiveLayerChanged(layer: Layer) {
+		this.state.activeLayer = layer;
 		this.forceUpdate();
 	}
 	
@@ -44,9 +50,19 @@ class App extends React.Component<AppParams, AppState> {
 		var random = Math.random() > 0.5 ? <b>0</b> : <i>1</i>;
 		return (
 			<x-linearlayout ui-flex="1">
-				<Tools tools={this.state.tools} activeTool={this.state.activeTool} onToolChanged={this.onToolChanged.bind(this)} />
-				<Drawing activeTool={this.state.activeTool} />
-				<Layers layers={this.state.layers} />
+				<Tools 
+					tools={this.state.tools}
+					activeTool={this.state.activeTool}
+					onToolChanged={this.onActiveToolChanged.bind(this)} 
+				/>
+				<Drawing
+					activeTool={this.state.activeTool} 
+				/>
+				<Layers 
+					layers={this.state.layers}
+					activeLayer={this.state.activeLayer}
+					onLayerChanged={this.onActiveLayerChanged.bind(this)} 
+				/>
 			</x-linearlayout>
 		)
 	}

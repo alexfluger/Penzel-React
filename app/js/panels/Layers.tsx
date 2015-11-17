@@ -4,35 +4,37 @@ import {Layer} from "../Layer"
 
 class LayersParams {
 	layers: Layer[];
+	activeLayer: Layer;
+	onLayerChanged;
 }
 
 class LayersState { }
 
 export class Layers extends React.Component<LayersParams, LayersState> {
-	toggleLayerVisibility(idx) {
-		
+	toggleLayerVisibility(layer: Layer) {
+		layer.visible = !layer.visible;
+		this.forceUpdate();
 	}
 	
-	selectLayer(layer) {
-		
-	}
+	selectLayer(layer) { }
 	
-	addLayer() {}
+	addLayer() { }
 	
 	render() {
 		var layers = [];
 		this.props.layers.forEach((layer, idx) => {
+			var color = (layer == this.props.activeLayer ? 'gray' : 'white');
 			layers.push(
-				<x-linearlayout key={idx} style={{height: '50px'}}>
+				<x-linearlayout key={idx} style={{height: '50px', 'background-color': color}}>
 					<button 
 						className={'fa fa-eye' + (layer.visible ? '' : '-slash')}
 						onClick={(e) => {this.toggleLayerVisibility(layer)}}
 						style={{width: '50px'}}
 					></button>
-					<div
+					<ui-text
 						ui-flex="1"
-						onClick={(e) => {this.selectLayer(layer)}}
-					>{layer.getName()}</div>
+						onClick={(e) => {this.props.onLayerChanged(layer)}}
+					>{layer.getName()}</ui-text>
 				</x-linearlayout>
 			);	
 		});
@@ -42,9 +44,7 @@ export class Layers extends React.Component<LayersParams, LayersState> {
 				ui-orientation="vertical"
 				style={{'background-color': 'lightgray', width: '250px'}}
 			>
-				<div
-					
-				>Layers</div>
+				<div>Layers</div>
 				{layers} 
 				<button onClick={(e) => {this.addLayer()}}>Add</button>
 			</x-linearlayout>
