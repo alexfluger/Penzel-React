@@ -29,6 +29,40 @@ export class Drawing extends React.Component<DrawingParams, DrawingState> {
 		this.canvasCtx = this.mid_canvas.getContext('2d');
 	}
 	
+	redraw() {
+		// if we have layer drawn, store image data to that layer
+		if (this.drawnLayerIdx > -1) {
+			this.layers[this.drawnLayerIdx].setImageData(this.getImageData());
+		} 
+		// clear back canvas
+		this._backCanvas.getContext('2d').clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this._backCanvas.getContext('2d').globalCompositeOperation = 'source-over';
+		// put previous layers on back canvas
+		for (var i = 0; i < this.currentLayerIdx; i++) {
+			if (this.layers[i].visible) this.layers[i].draw(this._backCanvas.getContext('2d'));
+		}
+		// clear working canvas
+		this.canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.canvasCtx.globalCompositeOperation = 'source-over';
+		// put current layer on working canvas
+		if (this.layers[this.currentLayerIdx].visible) {
+			// store index of drawn layer
+			this.drawnLayerIdx = this.currentLayerIdx;
+			// draw layer
+			this.layers[this.currentLayerIdx].draw(this.canvasCtx);
+		} else {
+			// no layer drawn, so clear drawn layer index
+			this.drawnLayerIdx = -1; 
+		}
+		// clear front canvas
+		this._frontCanvas.getContext('2d').clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this._frontCanvas.getContext('2d').globalCompositeOperation = 'source-over';
+		// put next layers on front canvas
+		for (var i = this.currentLayerIdx + 1; i < this.layers.length; i++) {
+			if (this.layers[i].visible) this.layers[i].draw(this._frontCanvas.getContext('2d'));
+		}
+	}
+	
 	onMouseMove(e) {
 		if (this.props.activeTool) this.props.activeTool.update(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
 	}
