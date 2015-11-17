@@ -5,7 +5,7 @@ export class Pencil implements Tool {
 	private color: String = '#00000000';
 	public width: number = 10;
 	
-	start(ctx: CanvasRenderingContext2D, brush: Object, x: number, y: number) {
+	start(ctx: CanvasRenderingContext2D, x: number, y: number) {
 		if (!ctx) return;
 		this.state = 'down',
 		ctx.lineWidth = this.width;
@@ -15,7 +15,7 @@ export class Pencil implements Tool {
 		ctx.moveTo(x, y);
 	}
 	
-	update(ctx: CanvasRenderingContext2D, brush: Object, x: number, y: number) {
+	update(ctx: CanvasRenderingContext2D, x: number, y: number) {
 		if (!ctx) return;
 		if (this.state == 'down') {
 			ctx.lineTo(x, y);
@@ -23,7 +23,7 @@ export class Pencil implements Tool {
 		}
 	}
 	
-	stop(ctx: CanvasRenderingContext2D, brush: Object, x: number, y: number) {
+	stop(ctx: CanvasRenderingContext2D, x: number, y: number) {
 		if (!ctx) return;
 		this.state = 'up',
 		ctx.lineTo(x, y);

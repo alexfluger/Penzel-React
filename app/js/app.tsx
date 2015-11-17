@@ -1,6 +1,7 @@
 /// <reference path="../../typings/react/react.d.ts" />
 import * as React from "react";
 import {Tools} from "./panels/Tools";
+import {Drawing} from "./panels/Drawing";
 import {Tool} from "./tools/Tool";
 import {Pencil} from "./tools/Pencil";
 import {Eraser} from "./tools/Eraser";
@@ -26,7 +27,6 @@ class App extends React.Component<AppParams, AppState> {
 	}
 	
 	onToolChanged(tool: Tool) {
-		console.log(this);
 		this.state.activeTool =  tool;
 		this.forceUpdate();
 	}
@@ -34,11 +34,11 @@ class App extends React.Component<AppParams, AppState> {
 	render() {
 		var random = Math.random() > 0.5 ? <b>0</b> : <i>1</i>;
 		return (
-			<x-LinearLayout ui-flex="1">
-				<Tools tools={this.state.tools} activeTool={this.state.activeTool} onToolChanged={this.onToolChanged.bind(this)}></Tools>
-				<div>2</div>
+			<x-linearlayout ui-flex="1">
+				<Tools tools={this.state.tools} activeTool={this.state.activeTool} onToolChanged={this.onToolChanged.bind(this)} />
+				<Drawing activeTool={this.state.activeTool} />
 				<div>3</div>
-			</x-LinearLayout>
+			</x-linearlayout>
 		)
 	}
 }
