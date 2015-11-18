@@ -29,12 +29,12 @@ export class Layers extends React.Component<LayersParams, LayersState> {
 		this.props.layers.forEach((layer, idx) => {
 			var color = (layer == this.props.activeLayer ? 'gray' : 'white');
 			layers.push(
-				<x-linearlayout key={idx} style={{height: '50px', 'background-color': color}}>
+				<x-linearlayout key={idx} style={{height: '50px', 'backgroundColor': color}}>
 					<button 
 						className={'fa fa-eye' + (layer.visible ? '' : '-slash')}
 						onClick={(e) => {this.toggleLayerVisibility(idx)}}
 						style={{width: '50px'}}
-					></button>
+					/>
 					<ui-text
 						ui-flex="1"
 						onClick={(e) => {this.props.onActiveLayerChanged(layer)}}
@@ -46,12 +46,14 @@ export class Layers extends React.Component<LayersParams, LayersState> {
 		return (
 			<x-linearlayout 
 				ui-orientation="vertical"
-				style={{'background-color': 'lightgray', width: '250px'}}
+				style={{'backgroundColor': 'lightgray', width: '250px', borderTop: '1px solid black', borderBottom: '1px solid black'}}
 			>
 				<div>Layers</div>
 				{layers} 
-				<button onClick={(e) => {this.props.onLayerAdded()}}>Add</button>
-				<button onClick={(e) => {this.props.onLayerRemoved()}}>Remove</button>
+				<x-linearlayout>
+					<button className={'fa fa-plus'} style={{margin: '10 10 10 0', width: 32, height: 32}} onClick={(e) => {this.props.onLayerAdded()}} />
+					<button className={'fa fa-minus'} style={{margin: '10 10 10 0', width: 32, height: 32}} onClick={(e) => {this.props.onLayerRemoved()}} />
+				</x-linearlayout>
 			</x-linearlayout>
 		);
 	}
