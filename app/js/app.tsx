@@ -100,7 +100,7 @@ class App extends React.Component<AppParams, AppState> {
 						onLayerAdded={this.onLayerAdded.bind(this)} 
 						onLayerRemoved={this.onLayerRemoved.bind(this)} 
 					/>
-					<ToolOptions />
+					<ToolOptions tool={this.state.activeTool} />
 				</x-linearlayout>
 			</x-linearlayout>
 		)

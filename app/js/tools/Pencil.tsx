@@ -1,3 +1,5 @@
+/// <reference path="../../../typings/react/react.d.ts" />
+import * as React from "react";
 import {Tool} from './Tool';
 
 export class Pencil implements Tool {
@@ -40,5 +42,17 @@ export class Pencil implements Tool {
 	}
 	
 	getOptionsComponent() {
+		return (
+			<div>
+				<div>Width: <input type="number" value={this.width} /></div>
+				<div>Line Cap:
+					<select>
+						<option>Butt</option>
+						<option>Round</option>
+						<option>Square</option>
+					</select> 
+				</div>
+			</div>
+		)
 	}
 }
