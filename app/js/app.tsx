@@ -3,6 +3,8 @@ import * as React from "react";
 import {Tools} from "./panels/Tools";
 import {Drawing} from "./panels/Drawing";
 import {Layers} from "./panels/Layers";
+import {Palette} from "./panels/Palette";
+import {ToolOptions} from "./panels/ToolOptions";
 import {Tool} from "./tools/Tool";
 import {Pencil} from "./tools/Pencil";
 import {Eraser} from "./tools/Eraser";
@@ -75,25 +77,31 @@ class App extends React.Component<AppParams, AppState> {
 		var random = Math.random() > 0.5 ? <b>0</b> : <i>1</i>;
 		return (
 			<x-linearlayout ui-flex="1">
-				<Tools 
-					tools={this.state.tools}
-					activeTool={this.state.activeTool}
-					onToolChanged={this.onActiveToolChanged.bind(this)} 
-				/>
+				<x-linearlayout ui-orientation="vertical">
+					<Tools 
+						tools={this.state.tools}
+						activeTool={this.state.activeTool}
+						onToolChanged={this.onActiveToolChanged.bind(this)} 
+					/>
+					<Palette />
+				</x-linearlayout>
 				<Drawing
 					activeTool={this.state.activeTool}
 					layers={this.state.layers} 
 					activeLayer={this.state.activeLayer}
 					onChange={this.onDrawingChanged.bind(this)}
 				/>
-				<Layers 
-					layers={this.state.layers}
-					activeLayer={this.state.activeLayer}
-					onActiveLayerChanged={this.onActiveLayerChanged.bind(this)}
-					onLayerChanged={this.onLayerChanged.bind(this)}
-					onLayerAdded={this.onLayerAdded.bind(this)} 
-					onLayerRemoved={this.onLayerRemoved.bind(this)} 
-				/>
+				<x-linearlayout ui-orientation="vertical">
+					<Layers 
+						layers={this.state.layers}
+						activeLayer={this.state.activeLayer}
+						onActiveLayerChanged={this.onActiveLayerChanged.bind(this)}
+						onLayerChanged={this.onLayerChanged.bind(this)}
+						onLayerAdded={this.onLayerAdded.bind(this)} 
+						onLayerRemoved={this.onLayerRemoved.bind(this)} 
+					/>
+					<ToolOptions />
+				</x-linearlayout>
 			</x-linearlayout>
 		)
 	}
