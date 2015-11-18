@@ -47,7 +47,21 @@ class App extends React.Component<AppParams, AppState> {
 	}
 	
 	onLayerChanged(idx: number, layer: Layer) {
-		this.state.activeLayer = layer;
+		this.forceUpdate();
+	}
+	
+	onLayerAdded() {
+		this.state.layers.push(new Layer('New Layer', new Image));
+		this.forceUpdate();
+	}
+	
+	onLayerRemoved() {
+		if (this.state.layers.length > 1) {
+			this.state.layers.splice(this.state.layers.indexOf(this.state.activeLayer), 1);
+			this.state.activeLayer = this.state.layers[0];
+		} else {
+			alert('Cannot Remove Last Layer');
+		}
 		this.forceUpdate();
 	}
 	
@@ -76,7 +90,9 @@ class App extends React.Component<AppParams, AppState> {
 					layers={this.state.layers}
 					activeLayer={this.state.activeLayer}
 					onActiveLayerChanged={this.onActiveLayerChanged.bind(this)}
-					onLayerChanged={this.onLayerChanged.bind(this)} 
+					onLayerChanged={this.onLayerChanged.bind(this)}
+					onLayerAdded={this.onLayerAdded.bind(this)} 
+					onLayerRemoved={this.onLayerRemoved.bind(this)} 
 				/>
 			</x-linearlayout>
 		)

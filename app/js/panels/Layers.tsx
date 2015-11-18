@@ -50,7 +50,8 @@ export class Layers extends React.Component<LayersParams, LayersState> {
 			>
 				<div>Layers</div>
 				{layers} 
-				<button onClick={(e) => {this.addLayer()}}>Add</button>
+				<button onClick={(e) => {this.props.onLayerAdded()}}>Add</button>
+				<button onClick={(e) => {this.props.onLayerRemoved()}}>Remove</button>
 			</x-linearlayout>
 		);
 	}
