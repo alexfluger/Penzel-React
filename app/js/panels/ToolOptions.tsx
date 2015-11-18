@@ -9,6 +9,12 @@ class ToolOptionsProps {
 class ToolOptionsState { }
 
 export class ToolOptions extends React.Component<ToolOptionsProps, ToolOptionsState> {
+	onOptionsChanged(options) {
+		this.props.tool.width = options.width;
+		this.props.tool.linecap = options.linecap;
+		this.forceUpdate();
+	}
+	
 	render() {
 		return (
 			<x-linearlayout
@@ -16,7 +22,7 @@ export class ToolOptions extends React.Component<ToolOptionsProps, ToolOptionsSt
 				style={{'backgroundColor': 'lightgray', width: '250px', borderTop: '1px solid black', borderBottom: '1px solid black'}}
 			>
 				<div>{this.props.tool.getName()} Options</div>
-				{this.props.tool.getOptionsComponent()}
+				{React.createElement(this.props.tool.getOptionsComponent(), {data: {width: this.props.tool.width, linecap: this.props.tool.linecap}, onChange: this.onOptionsChanged.bind(this)})}
 			</x-linearlayout>
 		);
 	}

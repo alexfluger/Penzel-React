@@ -1,16 +1,17 @@
-/// <reference path="../../../typings/react/react.d.ts" />
-import * as React from "react";
 import {Tool} from './Tool';
+import {PencilOptions} from "./PencilOptions"
 
 export class Pencil implements Tool {
 	protected state: string = 'up';
 	private color: String = '#00000000';
 	public width: number = 10;
+	public linecap: string = 'round';
 	
 	start(ctx: CanvasRenderingContext2D, x: number, y: number) {
 		if (!ctx) return;
 		this.state = 'down',
 		ctx.lineWidth = this.width;
+		ctx.lineCap = this.linecap;
 		ctx.strokeStyle = this.color;
 		ctx.globalCompositeOperation = 'source-over';
 		ctx.beginPath();
@@ -42,17 +43,6 @@ export class Pencil implements Tool {
 	}
 	
 	getOptionsComponent() {
-		return (
-			<div>
-				<div>Width: <input type="number" value={this.width} /></div>
-				<div>Line Cap:
-					<select>
-						<option>Butt</option>
-						<option>Round</option>
-						<option>Square</option>
-					</select> 
-				</div>
-			</div>
-		)
+		return PencilOptions
 	}
 }
