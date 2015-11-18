@@ -2,17 +2,17 @@ export class Layer {
 	visible: boolean = true;
 	
 	constructor(private name: string, private image: HTMLImageElement) {
-		image.onload = (e) => {
-			// console.log('loaded');
-		}
 	}
 	
 	draw(ctx: CanvasRenderingContext2D) {
 		ctx.drawImage(this.image, 0, 0);
-		// console.log('draw layer');
 	}
 	
-	setImageData(data: string) {
+	setImageData(data: string, cb) {
+		this.image.onload = (e) => {
+			cb(e);
+			this.image.onload = null;
+		}
 		this.image.src = data;
 	}
 	

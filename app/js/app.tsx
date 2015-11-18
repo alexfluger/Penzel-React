@@ -52,8 +52,9 @@ class App extends React.Component<AppParams, AppState> {
 	}
 	
 	onDrawingChanged(imageData: string) {
-		this.state.activeLayer.setImageData(imageData);
-		this.forceUpdate();
+		this.state.activeLayer.setImageData(imageData, (e) => {
+			this.forceUpdate();	
+		});
 	}
 	
 	render() {
