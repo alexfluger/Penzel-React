@@ -46,6 +46,16 @@ class App extends React.Component<AppParams, AppState> {
 		this.forceUpdate();
 	}
 	
+	onLayerChanged(idx: number, layer: Layer) {
+		this.state.activeLayer = layer;
+		this.forceUpdate();
+	}
+	
+	onDrawingChanged(imageData: string) {
+		this.state.activeLayer.setImageData(imageData);
+		this.forceUpdate();
+	}
+	
 	render() {
 		var random = Math.random() > 0.5 ? <b>0</b> : <i>1</i>;
 		return (
@@ -59,11 +69,13 @@ class App extends React.Component<AppParams, AppState> {
 					activeTool={this.state.activeTool}
 					layers={this.state.layers} 
 					activeLayer={this.state.activeLayer}
+					onChange={this.onDrawingChanged.bind(this)}
 				/>
 				<Layers 
 					layers={this.state.layers}
 					activeLayer={this.state.activeLayer}
-					onLayerChanged={this.onActiveLayerChanged.bind(this)} 
+					onActiveLayerChanged={this.onActiveLayerChanged.bind(this)}
+					onLayerChanged={this.onLayerChanged.bind(this)} 
 				/>
 			</x-linearlayout>
 		)

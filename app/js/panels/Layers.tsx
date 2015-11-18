@@ -5,15 +5,19 @@ import {Layer} from "../Layer"
 class LayersParams {
 	layers: Layer[];
 	activeLayer: Layer;
+	onActiveLayerChanged;
 	onLayerChanged;
+	onLayerAdded;
+	onLayerRemoved;
 }
 
 class LayersState { }
 
 export class Layers extends React.Component<LayersParams, LayersState> {
-	toggleLayerVisibility(layer: Layer) {
+	toggleLayerVisibility(idx: number) {
+		let layer = this.props.layers[idx];
 		layer.visible = !layer.visible;
-		this.forceUpdate();
+		this.props.onLayerChanged(idx, layer);
 	}
 	
 	selectLayer(layer) { }
@@ -28,12 +32,12 @@ export class Layers extends React.Component<LayersParams, LayersState> {
 				<x-linearlayout key={idx} style={{height: '50px', 'background-color': color}}>
 					<button 
 						className={'fa fa-eye' + (layer.visible ? '' : '-slash')}
-						onClick={(e) => {this.toggleLayerVisibility(layer)}}
+						onClick={(e) => {this.toggleLayerVisibility(idx)}}
 						style={{width: '50px'}}
 					></button>
 					<ui-text
 						ui-flex="1"
-						onClick={(e) => {this.props.onLayerChanged(layer)}}
+						onClick={(e) => {this.props.onActiveLayerChanged(layer)}}
 					>{layer.getName()}</ui-text>
 				</x-linearlayout>
 			);	

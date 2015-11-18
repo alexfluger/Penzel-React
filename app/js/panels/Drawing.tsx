@@ -3,15 +3,16 @@ import * as React from "react";
 import {Tool} from "../tools/Tool";
 import {Layer} from "../Layer";
 
-class DrawingParams {
+class DrawingProps {
 	activeTool: Tool;
 	layers: Layer[]
 	activeLayer: Layer;
+	onChange;
 }
 
 class DrawingState { }
 
-export class Drawing extends React.Component<DrawingParams, DrawingState> {
+export class Drawing extends React.Component<DrawingProps, DrawingState> {
 	container;
 	back_canvas;
 	mid_canvas;
@@ -44,10 +45,6 @@ export class Drawing extends React.Component<DrawingParams, DrawingState> {
 	}
 	
 	redraw() {
-		// if we have layer drawn, store image data to that layer
-		if (this.drawnLayerIdx > -1) {
-			this.props.layers[this.drawnLayerIdx].setImageData(this.getImageData());
-		} 
 		// clear back canvas
 		this.back_canvas.getContext('2d').clearRect(0, 0, this.back_canvas.width, this.back_canvas.height);
 		this.back_canvas.getContext('2d').globalCompositeOperation = 'source-over';
@@ -80,6 +77,7 @@ export class Drawing extends React.Component<DrawingParams, DrawingState> {
 
 	onMouseUp(e) {
 		if (this.props.activeTool) this.props.activeTool.stop(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+		this.props.onChange(this.getImageData());
 	}
 
 	onMouseDown(e) {
