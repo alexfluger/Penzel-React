@@ -1,5 +1,4 @@
-/// <reference path="../../../typings/react/react.d.ts" />
-import * as React from "react";
+import {EraserOptions} from "./EraserOptions";
 import {Pencil} from './Pencil';
 
 export class Eraser extends Pencil {
@@ -21,10 +20,14 @@ export class Eraser extends Pencil {
 		return 'eraser';
 	}
 
+	getOptions() {
+		return {
+			width: this.width
+		}
+	}
+
 	getOptionsComponent() {
-		return (
-			<div>Width: <input type="number" value={this.width} /></div>
-		)
+		return EraserOptions
 	}
 
 }

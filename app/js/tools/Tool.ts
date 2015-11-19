@@ -4,5 +4,6 @@ export interface Tool {
 	stop(ctx: CanvasRenderingContext2D, x: number, y: number);
 	getName(): string;
 	getIcon(): string;
+	getOptions();
 	getOptionsComponent();
 }

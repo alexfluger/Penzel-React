@@ -42,6 +42,13 @@ export class Pencil implements Tool {
 		return 'paint-brush';
 	}
 	
+	getOptions() {
+		return {
+			width: this.width,
+			linecap: this.linecap
+		}
+	}
+	
 	getOptionsComponent() {
 		return PencilOptions
 	}

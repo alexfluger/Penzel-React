@@ -91,7 +91,7 @@ class App extends React.Component<AppParams, AppState> {
 					activeLayer={this.state.activeLayer}
 					onChange={this.onDrawingChanged.bind(this)}
 				/>
-				<x-linearlayout ui-orientation="vertical">
+				<x-linearlayout ui-orientation="vertical" style={{'backgroundColor': 'lightgray'}}>
 					<Layers 
 						layers={this.state.layers}
 						activeLayer={this.state.activeLayer}
