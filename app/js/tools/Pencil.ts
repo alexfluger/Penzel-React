@@ -7,18 +7,18 @@ export class Pencil implements Tool {
 	public width: number = 10;
 	public linecap: string = 'round';
 	
-	start(ctx: CanvasRenderingContext2D, x: number, y: number) {
+	start(ctx: CanvasRenderingContext2D, x: number, y: number, palette) {
 		if (!ctx) return;
 		this.state = 'down',
 		ctx.lineWidth = this.width;
 		ctx.lineCap = this.linecap;
-		ctx.strokeStyle = this.color;
+		ctx.strokeStyle = palette.color1;
 		ctx.globalCompositeOperation = 'source-over';
 		ctx.beginPath();
 		ctx.moveTo(x, y);
 	}
 	
-	update(ctx: CanvasRenderingContext2D, x: number, y: number) {
+	update(ctx: CanvasRenderingContext2D, x: number, y: number, palette) {
 		if (!ctx) return;
 		if (this.state == 'down') {
 			ctx.lineTo(x, y);
@@ -26,7 +26,7 @@ export class Pencil implements Tool {
 		}
 	}
 	
-	stop(ctx: CanvasRenderingContext2D, x: number, y: number) {
+	stop(ctx: CanvasRenderingContext2D, x: number, y: number, palette) {
 		if (!ctx) return;
 		this.state = 'up',
 		ctx.lineTo(x, y);

@@ -8,6 +8,7 @@ class DrawingProps {
 	layers: Layer[]
 	activeLayer: Layer;
 	onChange;
+	palette;
 }
 
 class DrawingState { }
@@ -72,16 +73,16 @@ export class Drawing extends React.Component<DrawingProps, DrawingState> {
 	}
 	
 	onMouseMove(e) {
-		if (this.props.activeTool) this.props.activeTool.update(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+		if (this.props.activeTool) this.props.activeTool.update(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY, this.props.palette);
 	}
 
 	onMouseUp(e) {
-		if (this.props.activeTool) this.props.activeTool.stop(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+		if (this.props.activeTool) this.props.activeTool.stop(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY, this.props.palette);
 		this.props.onChange(this.getImageData());
 	}
 
 	onMouseDown(e) {
-		if (this.props.activeTool) this.props.activeTool.start(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+		if (this.props.activeTool) this.props.activeTool.start(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY, this.props.palette);
 	}
 	
 	render() {
