@@ -4,13 +4,8 @@
 		<link rel="stylesheet" href="css/ui.css" />
 		<link rel="stylesheet" href="css/penzel.css" />
 		<script src="../../node_modules/systemjs/dist/system.src.js"></script>
+		<script src="../config.system.js"></script>
 		<script>
-			System.config({
-				packages: {'js': {defaultExtension: 'js'}},
-				map: {
-					'react': '../../../node_modules/react/dist/react-with-addons.js'
-				}
-			});
 			System.import('js/app');
 		</script>
 	</head>
