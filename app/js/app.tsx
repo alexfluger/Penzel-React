@@ -17,6 +17,7 @@ class AppState {
 	activeLayer: Layer;
 	tools: Tool[];
 	activeTool: Tool;
+	palette: {color1}
 }
 
 class App extends React.Component<AppParams, AppState> {
@@ -34,7 +35,8 @@ class App extends React.Component<AppParams, AppState> {
 			layers: layers,
 			activeLayer: layers[0],
 			tools: tools,
-			activeTool: tools[0]			
+			activeTool: tools[0],
+			palette: {color1: '#000000'}			
 		}
 	}
 	
@@ -73,25 +75,32 @@ class App extends React.Component<AppParams, AppState> {
 		});
 	}
 	
+	onPaletteChanged(e) {
+		this.state.palette.color1 = e.target.value;
+		this.forceUpdate();
+	}
+	
 	render() {
 		var random = Math.random() > 0.5 ? <b>0</b> : <i>1</i>;
 		return (
 			<x-linearlayout ui-flex="1">
-				<x-linearlayout ui-orientation="vertical">
+				<x-linearlayout ui-orientation="vertical" style={{'backgroundColor': 'lightgray'}}>
 					<Tools 
 						tools={this.state.tools}
 						activeTool={this.state.activeTool}
 						onToolChanged={this.onActiveToolChanged.bind(this)} 
 					/>
-					<Palette />
+					<ui-text ui-flex="1" />
+					<Palette color={this.state.palette.color1} onChange={this.onPaletteChanged.bind(this)} />
 				</x-linearlayout>
 				<Drawing
 					activeTool={this.state.activeTool}
+					palette={this.state.palette}
 					layers={this.state.layers} 
 					activeLayer={this.state.activeLayer}
 					onChange={this.onDrawingChanged.bind(this)}
 				/>
-				<x-linearlayout ui-orientation="vertical">
+				<x-linearlayout ui-orientation="vertical" style={{'backgroundColor': 'lightgray'}}>
 					<Layers 
 						layers={this.state.layers}
 						activeLayer={this.state.activeLayer}

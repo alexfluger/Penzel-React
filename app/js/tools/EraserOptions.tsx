@@ -1,14 +1,14 @@
 /// <reference path="../../../typings/react/react.d.ts" />
 import * as React from "react";
 
-class PencilOptionsProps { 
+class EraserOptionsProps { 
 	data;
 	onChange;
 }
 
-class PencilOptionsState { }
+class EraserOptionsState { }
 
-export class PencilOptions extends React.Component<PencilOptionsProps, PencilOptionsState> {
+export class EraserOptions extends React.Component<EraserOptionsProps, EraserOptionsState> {
 	
 	updateData(prop: string, val: any) {
 		this.props.data[prop] = val;
@@ -19,13 +19,6 @@ export class PencilOptions extends React.Component<PencilOptionsProps, PencilOpt
 		return (
 			<div>
 				<div>Width: <input type="range" min="0" max="100" value={this.props.data.width} onChange={(e) => {this.updateData('width', e.target.value)}} /></div>
-				<div>Line Cap:
-					<select value={this.props.data.linecap} onChange={(e) => {this.updateData('linecap', e.target.value)}}>
-						<option value="butt">Butt</option>
-						<option value="round">Round</option>
-						<option value="square">Square</option>
-					</select> 
-				</div>
 			</div>
 		);
 	}

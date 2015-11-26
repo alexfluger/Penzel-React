@@ -46,7 +46,7 @@ export class Layers extends React.Component<LayersParams, LayersState> {
 		return (
 			<x-linearlayout 
 				ui-orientation="vertical"
-				style={{'backgroundColor': 'lightgray', width: '250px', borderTop: '1px solid black', borderBottom: '1px solid black'}}
+				style={{width: '250px', padding: '5px', borderTop: '1px solid black', borderBottom: '1px solid black'}}
 			>
 				<div>Layers</div>
 				{layers} 

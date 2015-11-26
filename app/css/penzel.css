@@ -3,11 +3,18 @@ body {
 }
 button {
 	-webkit-appearance: none;
-	border: 1px solid black;
-	background-color: white;
+	outline: none;
+	border: none;
+	background-color: transparent;
 }
 button.selected {
 	background-color: rgb(100, 100, 100);
+}
+
+input[type=color] {
+	padding: 0;
+	margin: 0;
+	border: none;
 }
 
 .layer {

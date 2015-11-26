@@ -8,6 +8,7 @@ class DrawingProps {
 	layers: Layer[]
 	activeLayer: Layer;
 	onChange;
+	palette;
 }
 
 class DrawingState { }
@@ -24,6 +25,11 @@ export class Drawing extends React.Component<DrawingProps, DrawingState> {
 		var w = this.container.clientWidth;
 		var h = this.container.clientHeight;
 		
+		this.front_canvas.setAttribute('touch-action', 'none');
+    	this.front_canvas.addEventListener('pointerdown', this.onMouseDown.bind(this));
+    	this.front_canvas.addEventListener('pointermove', this.onMouseMove.bind(this));
+    	this.front_canvas.addEventListener('pointerup', this.onMouseUp.bind(this));
+		
 		this.back_canvas.width = w;
 		this.mid_canvas.width = w;
 		this.front_canvas.width = w;
@@ -32,9 +38,16 @@ export class Drawing extends React.Component<DrawingProps, DrawingState> {
 		this.front_canvas.height = h;
 		
 		this.canvasCtx = this.mid_canvas.getContext('2d');
+
 		
 		this.redraw();
 	}
+	
+	componentWillUnmount() {
+    	this.front_canvas.removeEventListener('pointerdown', this.onMouseDown.bind(this));
+    	this.front_canvas.removeEventListener('pointermove', this.onMouseMove.bind(this));
+    	this.front_canvas.removeEventListener('pointerup', this.onMouseUp.bind(this));
+  	}
 	
 	componentDidUpdate() {
 		this.redraw();
@@ -72,16 +85,16 @@ export class Drawing extends React.Component<DrawingProps, DrawingState> {
 	}
 	
 	onMouseMove(e) {
-		if (this.props.activeTool) this.props.activeTool.update(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+		if (this.props.activeTool) this.props.activeTool.update(this.canvasCtx, e.x - 45, e.y, this.props.palette);
 	}
 
 	onMouseUp(e) {
-		if (this.props.activeTool) this.props.activeTool.stop(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+		if (this.props.activeTool) this.props.activeTool.stop(this.canvasCtx, e.x - 45, e.y, this.props.palette);
 		this.props.onChange(this.getImageData());
 	}
 
 	onMouseDown(e) {
-		if (this.props.activeTool) this.props.activeTool.start(this.canvasCtx, e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+		if (this.props.activeTool) this.props.activeTool.start(this.canvasCtx, e.x - 45, e.y, this.props.palette);
 	}
 	
 	render() {
@@ -95,9 +108,6 @@ export class Drawing extends React.Component<DrawingProps, DrawingState> {
 				<canvas
 					id="front_canvas"
 					ref={(c) => this.front_canvas = c}
-					onMouseMove={this.onMouseMove.bind(this)}
-					onMouseUp={this.onMouseUp.bind(this)}
-					onMouseDown={this.onMouseDown.bind(this)}
 				></canvas>
 			</x-absolutelayout>
 		);
